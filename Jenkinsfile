@@ -56,4 +56,16 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            script {
+                try {
+                    telegramSend(message: "Тестовое сообщение из Jenkins (без переменных)")
+                } catch (Exception e) {
+                    echo "Ошибка отправки в Telegram: ${e.message}"
+                }
+            }
+        }
+    }
 }
