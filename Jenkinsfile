@@ -60,11 +60,11 @@ pipeline {
     post {
         always {
             script {
-                try {
-                    telegramSend(message: "Тестовое сообщение из Jenkins (без переменных)")
-                } catch (Exception e) {
-                    echo "Ошибка отправки в Telegram: ${e.message}"
-                }
+                def buildInfo = "Build number: ${currentBuild.number}\n" +
+                                "Build status: ${currentBuild.currentResult}\n" +
+                                "Started at: ${new Date(currentBuild.startTimeInMillis)}\n" +
+                                "Duration so far: ${currentBuild.durationString}"
+                telegramSend(message: buildInfo)
             }
         }
     }
